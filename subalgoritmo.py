@@ -2,24 +2,24 @@ import os
 from datetime import datetime
 os.system("cls")
 
-def menuUsuario():
+def menuPrincipal():
     while True:
         print("""Qual função de usuário deseja acessar?
         1 - Cadastrar
         2 - Efetuar login
-        3 - Voltar
+        0 - SAIR
         """)
         try:
             opcao_usuario = input()
             match opcao_usuario:
+                case "0":
+                    quit()
                 case "1":
                     os.system("cls")
                     cadastroUsuario()
                 case "2":
                     os.system("cls")
-                    efetuarLogin()
-                case "3":
-                    menuPrincipal()
+                    menuLogin()
                 case _:
                     os.system("cls")
                     print("Opção inválida. Tente novamente.")
@@ -34,14 +34,40 @@ def efetuarLogin():
 
 def menuLogin():
     while True:
+        print("""Qual menu deseja acessar?
+        1 - Conta
+        2 - Veículo
+        3 - Diagnóstico
+        4 - Sair da Conta
+        """)
+        try:
+            opcao_login = input()
+            match opcao_login:
+                case "1":
+                    os.system("cls")
+                    menuConta()
+                case "2":
+                    os.system("cls")
+                    menuVeiculo()
+                case "3":
+                    os.system("cls")
+                    menuDiagnostico()
+                case "4":
+                    os.system("cls")
+                    menuPrincipal()
+                case _:
+                    print("Opção inválida. Tente novamente.")
+        except Exception as e:
+            print(f"Ocorreu um erro: {e}")
+
+def menuConta():
+    while True:
         print("""Qual função deseja acessar?
         1 - Adicionar dados
         2 - Informações da minha conta
-        3 - Diagnósticos
-        4 - Atualizar dados pessoais
-        5 - Redefinir senha
-        6 - Sair da Conta
-        7 - Voltar
+        3 - Atualizar dados pessoais
+        4 - Redefinir senha
+        5 - Voltar
         """)
         try:
             opcao_login = input()
@@ -54,29 +80,20 @@ def menuLogin():
                     infoConta()
                 case "3":
                     os.system("cls")
-                    menuDiagnostico()
+                    attDadosPessoais()
                 case "4":
                     os.system("cls")
-                    attDadosPessoais()
+                    redefinirSenha()
                 case "5":
                     os.system("cls")
-                    redefinirSenha()
-                case "6":
-                    os.system("cls")
-                    sairConta()
-                    menuUsuario()
-                case "7":
-                    menuPrincipal()
+                    menuLogin()
                 case _:
                     print("Opção inválida. Tente novamente.")
         except Exception as e:
             print(f"Ocorreu um erro: {e}")
-
 def addDadosPessoais():
     ...
 def infoConta():
-    ...
-def menuDiagnostico():
     ...
 def attDadosPessoais():
     ...
@@ -85,7 +102,7 @@ def redefinirSenha():
 
 def menuVeiculo():
     while True:
-        print("""Qual função de veículo deseja acessar?
+        print("""Qual função deseja acessar?
         1 - Cadastrar veículo
         2 - Remover veículo
         3 - Informações dos meus veículos
@@ -104,7 +121,8 @@ def menuVeiculo():
                     os.system("cls")
                     infoVeiculos()
                 case "4":
-                    menuPrincipal()
+                    os.system("cls")
+                    menuLogin()
                 case _:
                     print("Opção inválida. Tente novamente.")
         except Exception as e:
@@ -116,6 +134,29 @@ def cadastroVeiculo():
 def removerVeiculo():
     ...
 def infoVeiculos():
+    ...
+
+def menuDiagnostico():
+    while True:
+        print("""Qual função deseja acessar?
+        1 - Realizar diagnóstico
+        2 - Ver histórico
+        3 - Voltar
+        """)
+        opcao_diag = input()
+        match opcao_diag:
+            case "1":
+                os.system("cls")
+                realizarDiagnostico()
+            case "2":
+                os.system("cls")
+                historicoDiagnostico()
+            case "3":
+                os.system("cls")
+                menuLogin()
+def realizarDiagnostico():
+    ...
+def historicoDiagnostico():
     ...
 
 menuPrincipal()
