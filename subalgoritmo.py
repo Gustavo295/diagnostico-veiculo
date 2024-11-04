@@ -72,6 +72,46 @@ def menuListar() -> None:
             os.system("cls")
             print(f"Ocorreu um erro: {e}")
 
+def filtrarProblemas(conn) -> None:
+    while True:
+        print(Fore.LIGHTCYAN_EX + "Deseja filtrar por qual tipo de problema?" +
+    Fore.LIGHTBLUE_EX + """
+    1 - Elétrico
+    2 - Hidráulico
+    3 - Mecânico    
+    0 - VOLTAR
+        """)
+        try:
+            opcao_problema = input()
+            cursor = conn.cursor()
+            match opcao_problema:
+                case "1":
+                    cursor.execute("SELECT tipo_problema, problema_veiculo, solucao FROM T_DIAGNOSTICO WHERE tipo_problema = 'Elétrico'")
+                case "2":
+                    cursor.execute("SELECT tipo_problema, problema_veiculo, solucao FROM T_DIAGNOSTICO WHERE tipo_problema = 'Hidráulico'")
+                case "3":
+                    cursor.execute("SELECT tipo_problema, problema_veiculo, solucao FROM T_DIAGNOSTICO WHERE tipo_problema = 'Mecânico'")
+                case "0":
+                    menuListar()
+                case _:
+                    os.system("cls")
+                    print(Fore.LIGHTRED_EX + "Opção inválida. Tente novamente!")
+            colunas = [desc[0] for desc in cursor.description]
+            dados = cursor.fetchall()
+            df = pd.DataFrame(dados, columns=colunas)
+            df = df.rename(columns={
+        "TIPO_PROBLEMA": "Tipo do Problema",
+        "PROBLEMA_VEICULO": "Problema do Veículo",
+        "SOLUCAO": "Solução"
+        })
+            if df.empty:
+                print(Fore.YELLOW + "Nenhum registro encontrado.")
+            else:
+                print(df.to_string(index=False))
+                print()
+        except Exception as e:
+            print(Fore.RED + f"Erro ao listar registros: {e}")
+            
 def listarTudo(conn) -> None:
     try:
         cursor = conn.cursor()
@@ -91,9 +131,6 @@ def listarTudo(conn) -> None:
             print()
     except Exception as e:
         print(Fore.RED + f"Erro ao listar registros: {e}")
-        
-def filtrarProblemas(conn) -> None:
-    ...
     
 def realizarDiagnostico():
     ...
