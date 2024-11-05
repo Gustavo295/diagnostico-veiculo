@@ -39,7 +39,7 @@ def menuPrincipal():
                     menuListar()
                 case _:
                     os.system("cls")
-                    print("Opção inválida. Tente novamente.")
+                    print(Fore.RED + "Opção inválida. Tente novamente.")
         except Exception as e:
             os.system("cls")
             print(Fore.RED + f"Ocorreu um erro:{e}")
@@ -67,10 +67,10 @@ def menuListar() -> None:
                     menuPrincipal()
                 case _:
                     os.system("cls")
-                    print("Opção inválida. Tente novamente")
+                    print(Fore.RED + "Opção inválida. Tente novamente")
         except Exception as e:
             os.system("cls")
-            print(f"Ocorreu um erro: {e}")
+            print(Fore.RED + f"Ocorreu um erro: {e}")
 
 def filtrarProblemas(conn) -> None:
     while True:
@@ -95,7 +95,7 @@ def filtrarProblemas(conn) -> None:
                     menuListar()
                 case _:
                     os.system("cls")
-                    print(Fore.LIGHTRED_EX + "Opção inválida. Tente novamente!")
+                    print(Fore.RED + "Opção inválida. Tente novamente!")
             colunas = [desc[0] for desc in cursor.description]
             dados = cursor.fetchall()
             df = pd.DataFrame(dados, columns=colunas)
@@ -132,7 +132,35 @@ def listarTudo(conn) -> None:
     except Exception as e:
         print(Fore.RED + f"Erro ao listar registros: {e}")
     
-def realizarDiagnostico():
-    ...
-
+def realizarDiagnostico() -> None:
+    while True:
+        print(Fore.LIGHTCYAN_EX + "Quais problemas está tendo?" + 
+        Fore.LIGHTBLUE_EX + """
+        1 - Ruído no motor
+        2 - Vazamento de fluido
+        3 - Bateria descarregando rapidamente
+        0 - VOLTAR
+            """)
+        try:
+            opcao_diagnostico = input()
+            match opcao_diagnostico:
+                case "1":
+                    os.system("cls")
+                    print(Fore.GREEN + "Solução: " + Fore.LIGHTBLACK_EX + "Substituir as correias dentadas")
+                case "2":
+                    os.system("cls")
+                    print(Fore.GREEN + "Solução: " + Fore.LIGHTBLACK_EX + "Substituir a mangueira de fluido")
+                case "3":
+                    os.system("cls")
+                    print(Fore.GREEN + "Solução: " + Fore.LIGHTBLACK_EX + "Tente substituir o alternador")
+                case "0":
+                    os.system("cls")
+                    menuPrincipal()
+                case _:
+                    os.system("cls")
+                    print(Fore.RED + "Opção inválida. Tente novamente")
+        except Exception as e:
+            os.system("cls")
+            print(Fore.RED + f"Ocorreu um erro: {e}")
+            
 menuPrincipal()
